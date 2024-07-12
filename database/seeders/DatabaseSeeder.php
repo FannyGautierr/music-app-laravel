@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Playlist;
 use App\Models\Track;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Track::factory(30)->create();
+        // Track::factory(30)->create();
+        Playlist::factory(10)->create();
     }
 }
