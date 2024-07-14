@@ -58,13 +58,11 @@ const autocompleteClicked = ref(false);
                 Playlist Creation
             </h2>
         </template>
-        {{ playlistForm }}
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <form @submit.prevent="storePlaylist()" class="flex flex-col gap-4 p-8 overflow-auto bg-[#191919] rounded-lg my-4">
                         <div v-for="field in ['name']" :key="field" class="mb-4">
                             <label :for="field" class="block text-gray-100 text-sm font-bold capitalize">{{ field }}</label>
-                            {{ playlistForm[field] }}
                             <input
                                 :type="text"
                                 :id="field"
@@ -79,6 +77,7 @@ const autocompleteClicked = ref(false);
                         <input
                             type="text"
                             name="autocomplete"
+                            placeholder="Search for a track"
                             class="text-black w-full rounded-lg bg-gray-100 text-gray-900"
                             v-model="autocomplete"
                             @click="autocompleteClicked = !autocompleteClicked"
@@ -100,8 +99,13 @@ const autocompleteClicked = ref(false);
                             </div>
 
                         </Transition>
-
-                        <button type="submit" class="w-full">Create Playlist</button>
+                        <div>
+                            <p class="font-bold text-2xl">Selected tracks</p>
+                            <div v-for="track in playlistForm.tracks" :key="track.id">
+                                <p>{{ track.name }} - {{ track.artist }}</p>
+                            </div>
+                        </div>
+                        <button type="submit" class="m-auto bg-indigo-700 w-fit px-4 py-2 rounded-2xl">Create Playlist</button>
                     </form>
                 </div>
             </div>
