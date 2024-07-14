@@ -14,13 +14,11 @@ const emit = defineEmits(['play', 'pause','editTrack','deleteTrack']);
 
 function manageAudio() {
     if(isPlaying.value) {
-        console.log('Pausing audio');
         audio.pause();
         emit('pause');
         isPlaying.value = false;
         return;
     }else{
-        console.log('Playing audio');
         audio.play();
         isPlaying.value = true;
         emit('play', audio);

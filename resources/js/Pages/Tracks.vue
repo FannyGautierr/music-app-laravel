@@ -1,13 +1,9 @@
 <script setup>
 import AppLayout from '@/Layouts/AppLayout.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-// import TrackCreation from '@/Components/Tracks/TrackCreation.vue';
-import TextInput from '@/Components/TextInput.vue';
 import { ref, computed } from 'vue';
 import TrackCard from '@/Components/Tracks/TrackCard.vue';
-// import TrackEditing from '@/Components/Tracks/TrackEditing.vue';
 import { usePage, Link } from '@inertiajs/vue3';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
+
 
 const page = usePage();
 const showTrackCreation = ref(false);
@@ -15,11 +11,6 @@ const showTrackEdit = ref(false);
 const trackToEdit = ref(null);
 
 const search = ref('');
-
-function createTrack(){
-    showTrackEdit.value = false;
-    showTrackCreation.value = true;
-}
 
 const filteredTracks = computed(() => {
     if (!search.value) {
@@ -33,17 +24,11 @@ const filteredTracks = computed(() => {
     )
   )
 });
-console.log(page.props.tracks);
 
 function editTrack(track){
     showTrackCreation.value = false;
     showTrackEdit.value = true;
     trackToEdit.value = track;
-}
-
-function deleteTrack(uuid){
-//    /track/{uuid}
-
 }
 
 </script>
@@ -58,17 +43,7 @@ function deleteTrack(uuid){
                 <Link :href="route('createTrack')">Add new track</Link>
             </div>
         </template>
-
-        <!-- <TrackCreation v-if="showTrackCreation" /> -->
-        <!-- <TrackEditing
-        v-if="showTrackEdit"
-        :track="trackToEdit"
-        /> -->
         <div class="flex flex-col py-12">
-
-            <!-- <TextInput v-model="search" class="m-auto w-full">
-                coucou
-            </TextInput> -->
             <div class="relative px-20">
                 <input
                     type="text"

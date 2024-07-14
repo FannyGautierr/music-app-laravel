@@ -41,10 +41,10 @@ const logout = () => {
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <!-- <Link :href="route('dashboard')">
-                                    <ApplicationMark class="block h-9 w-auto" />
-                                </Link> -->
-                                <p class="bold text-2xl">Spotifie</p>
+                                <Link :href="route('index')">
+                                    <p class="bold text-2xl">Spotifie</p>
+                                </Link>
+
                             </div>
 
                             <!-- Navigation Links -->
@@ -57,6 +57,9 @@ const logout = () => {
                                 </NavLink>
                                 <NavLink :href="route('playlists')" :active="route().current('playlists')">
                                     Playlists
+                                </NavLink>
+                                <NavLink :href="route('apiKeys')" :active="route().current('apiKeys')">
+                                    API Key
                                 </NavLink>
                             </div>
                         </div>

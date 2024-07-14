@@ -17,12 +17,6 @@ class PlaylistController extends Controller
             ->with(['tracks', 'user'])
             ->withCount('tracks')
             ->get();
-        // $playlists = Playlist::where('user_id', Auth::id())->with('tracks')->with('user')->get();
-
-        // foreach ($playlists as $playlist) {
-        //     $playlist->tracks()->toSql();
-        //     $playlist->tracks;
-        // }
 
         return Inertia::render('Playlists', [
             'playlists' => $playlists

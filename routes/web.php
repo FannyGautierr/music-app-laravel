@@ -7,6 +7,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlaylistController;
 use App\Http\Controllers\TrackController;
 use App\Http\Middleware\IsAdmin;
+use App\Http\Controllers\ApiKeyController;
+use App\Models\Track;
+use App\Models\Playlist;
+use App\Models\ApiKeys;
 
 Route::middleware([
     'auth:sanctum',
@@ -15,8 +19,11 @@ Route::middleware([
 
 ])->group(function () {
     Route::get('/', function () {
-        return Inertia::render('Dashboard');
-    });
+        return Inertia::render('Dashboard', [
+            'playlistsCount' => Playlist::count(),
+            'tracksCount' => Track::count(),
+        ]);
+    })->name('index');
     // Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     Route::get('/tracks', [TrackController::class, 'getAllTracks'])->name('tracks');
     Route::get('/track/{uuid}', [TrackController::class, 'getTrack'])->name('track');
@@ -27,7 +34,7 @@ Route::middleware([
     Route::put('/track/{uuid}', [TrackController::class, 'updateTrack'])->name('updateTrack');
 
     Route::delete('/track/{uuid}', [TrackController::class, 'deleteTrack'])->name('deleteTrack');
-    Route::get('/track/{uuid}/play', [TrackController::class, 'playTrack'])->name('playTrack');
+    // Route::get('/track/{uuid}/play', [TrackController::class, 'playTrack'])->name('playTrack');
 
     //
 
@@ -38,11 +45,18 @@ Route::middleware([
     Route::post('/playlist', [PlaylistController::class, 'storePlaylist'])->name('storePlaylist');
 
 
-    Route::put('/playlist/{uuid}', [PlaylistController::class, 'updatePlaylist'])->name('updatePlaylist');
-    Route::delete('/playlist/{uuid}', [PlaylistController::class, 'deletePlaylist'])->name('deletePlaylist');
-    Route::post('/playlist/{uuid}/track', [PlaylistController::class, 'addTrackToPlaylist'])->name('addTrackToPlaylist');
-    Route::delete('/playlist/{uuid}/track/{track}', [PlaylistController::class, 'removeTrackFromPlaylist'])->name('removeTrackFromPlaylist');
-    Route::get('/playlist/{uuid}/play', [PlaylistController::class, 'playPlaylist'])->name('playPlaylist');
+    // API KEY
+
+    Route::get('/api-keys',[ApiKeyController::class,'getAllApiKeys'])->name('apiKeys');
+
+    Route::post('/store-api-key', [ApiKeyController::class, 'createApiKey'])->name('createApiKey');
+    Route::delete('/delete-api-key/{uuid}', [ApiKeyController::class, 'deleteApiKey'])->name('deleteApiKey');
+
+    // Route::put('/playlist/{uuid}', [PlaylistController::class, 'updatePlaylist'])->name('updatePlaylist');
+    // Route::delete('/playlist/{uuid}', [PlaylistController::class, 'deletePlaylist'])->name('deletePlaylist');
+    // Route::post('/playlist/{uuid}/track', [PlaylistController::class, 'addTrackToPlaylist'])->name('addTrackToPlaylist');
+    // Route::delete('/playlist/{uuid}/track/{track}', [PlaylistController::class, 'removeTrackFromPlaylist'])->name('removeTrackFromPlaylist');
+    // Route::get('/playlist/{uuid}/play', [PlaylistController::class, 'playPlaylist'])->name('playPlaylist');
 });
 
 Route::middleware([
@@ -53,6 +67,7 @@ Route::middleware([
 ])->group(function (){
     Route::get('/create-track', [TrackController::class, 'createTrack'])->name('createTrack');
 });
+
 
 // Route::middleware([
 //     'auth:sanctum',
